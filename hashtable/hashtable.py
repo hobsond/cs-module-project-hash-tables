@@ -22,7 +22,9 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
-
+        assert(capacity >=8),'capacity must be greater than or equal 8'
+        self.capacity = capacity;
+        self.list = [] * capacity
 
     def get_num_slots(self):
         """
@@ -35,6 +37,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return len(self.list)
 
 
     def get_load_factor(self):
