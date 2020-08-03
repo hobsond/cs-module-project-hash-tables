@@ -14,7 +14,7 @@ class HashTable:
         assert(capacity >=8),'capacity must be greater than or equal 8'
         
         self.capacity = capacity;
-        self.list = [None] * capacity;
+        self.list = [HashTableEntry(None,None)] * capacity;
     
     def returnList(self):
         return self.list
@@ -37,4 +37,4 @@ class HashTable:
     
 t = HashTable(8)
 
-print(t.djb2('hello'))
+print(t.getList())

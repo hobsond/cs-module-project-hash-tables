@@ -6,7 +6,11 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
-
+        
+    def setNext(self,newNext):
+        self.next = newNext;
+        return self.next
+        
 
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
@@ -24,7 +28,7 @@ class HashTable:
         # Your code here
         assert(capacity >=8),'capacity must be greater than or equal 8'
         self.capacity = capacity;
-        self.list = [] * capacity
+        self.list = [HashTableEntry(None,None)] * capacity
 
     def get_num_slots(self):
         """
