@@ -6,7 +6,7 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
-        
+    
     def setNext(self,newNext):
         self.next = newNext;
         return self.next
@@ -93,6 +93,23 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # get the hash value
+        
+        _hash_  = self.hash_index(key)
+        
+        bucket = self.list[_hash_]
+        if bucket.value ==None:
+            bucket.key = key
+            bucket.value  = value
+        else:
+            while bucket.value is not None:
+                bucket = bucket.next
+            bucket.value = value
+            bucket.key = key
+            
+        # if the value of that index node is none 
+        # add the value to the index head
+        # else find the next empty node in that chain and insert the value
 
 
     def delete(self, key):
