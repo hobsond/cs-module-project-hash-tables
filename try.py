@@ -20,6 +20,21 @@ class Bucket:
                 curr = curr.next
             curr.next = HashTableEntry(key,value)
     
+    
+    def delete(self,key):
+        curr = self.head
+        while curr.key is not key and curr.next is not None:
+            if curr.next.key is key:
+                
+                searchKey = curr.next
+                nextKey = searchKey.next 
+                curr.next = nextKey
+                self.getValues()
+                return "deleted"
+            else:
+                curr=curr.next
+        return "could not Find"
+        
     def getValues(self):
         curr = self.head
         while curr:
@@ -75,15 +90,20 @@ class HashTable:
         newHash = self.hash_index(key)
         bucket  = self.list[newHash]
         bucket.insert(key,value)
-        bucket.getValues()
         
         
         # if the value of that index node is none 
         # add the value to the index head
         # else find the next empty node in that chain and insert the value
 
-
+    def delete(self,key):
+        t= self.hash_index(key)
+        bucket = self.list[t]
+        bucket.delete(key)
 
     
 t = HashTable(8)
+t.put('odt','kim')
 t.put('tod','him')
+t.put('dot','jim')
+print(t.delete('tod'))
