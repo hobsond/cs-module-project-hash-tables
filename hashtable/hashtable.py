@@ -11,23 +11,30 @@ class HashTableEntry:
 MIN_CAPACITY = 8
 
 
+
 class Bucket:
     def __init__(self):
         self.head = None
     
     def insert(self,key,value):
+        
+        x = HashTableEntry(key,value)
+       
         if self.head is None:
-            self.head = HashTableEntry(key,value)
+            self.head = x 
         else:
             curr = self.head
-            while curr.next:
+            
+            while curr.next is not None:
                 curr = curr.next
-            curr.next = HashTableEntry(key,value)
+            curr.next = x
+            
+            
     
     def getKey(self,key):
         curr= self.head
         
-        while curr:
+        while curr is not None:
             if curr.key == key:
                 return curr.value
             curr= curr.next
@@ -53,11 +60,20 @@ class Bucket:
         
     def getValues(self):
         curr = self.head
-        while curr:
-            print(curr.value)
+        while curr is not None:
+            print(curr.key)
             curr = curr.next
         
-       
+            
+    def getKeyandValues(self):
+        curr = self.head
+        x= []
+        while curr is not None:
+            x.append([curr.key,curr.value])
+            curr = curr.next
+        return x
+        
+        
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -93,6 +109,13 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        y = [i for i in self.list if i is not None]
+        
+        numberOfOn = len(y)
+        # print(y)
+        return numberOfOn / self.capacity
+    
+        
 
 
     def fnv1(self, key):
@@ -140,8 +163,21 @@ class HashTable:
         # add the value to the index head
         # else find the next empty node in that chain and insert the value
         newHash = self.hash_index(key)
-        bucket  = self.list[newHash]
-        bucket.insert(key,value)
+        
+        if self.list[newHash] is not None:
+            bucket  = self.list[newHash]
+            
+            bucket.insert(key,value)
+        else:
+            self.list[newHash] = Bucket()
+            x = self.list[newHash]
+            x.insert(key,value)
+        if self.get_load_factor() > .07:
+            self.resize(self.capacity * 2)  
+            
+        elif self.get_load_factor() <= .02:
+            self.resize(self.capacity/2)
+        
 
 
     def delete(self, key):
@@ -153,7 +189,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        t = self.hash_index(key)
+        t= self.hash_index(key)
         bucket = self.list[t]
         bucket.delete(key)
 
@@ -180,6 +216,16 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        x= []
+        for i in self.list:
+            if i is not None:
+                x += i.getKeyandValues()
+        
+        self.capacity = new_capacity
+        self.list = [None] * self.capacity
+        for i in x:
+            self.put(i[0],i[1])
+        
 
 
 

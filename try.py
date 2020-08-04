@@ -21,6 +21,9 @@ class Bucket:
             curr = self.head
             
             while curr.next is not None:
+                if curr.key is key:
+                    curr.value = value
+                    return
                 curr = curr.next
             curr.next = x
             
@@ -31,9 +34,9 @@ class Bucket:
         
         while curr is not None:
             if curr.key == key:
-                return curr.value
+                return True
             curr= curr.next
-        return None
+        return False
     
     def delete(self,key):
         curr = self.head
@@ -75,7 +78,7 @@ class HashTable:
         assert(capacity >=8),'capacity must be greater than or equal 8'
         
         self.capacity = capacity;
-        self.list = [None] * capacity;
+        self.list = [Bucket()] * capacity;
     
     def returnList(self):
         return self.list
@@ -125,15 +128,28 @@ class HashTable:
         # get the hash value
         
         newHash = self.hash_index(key)
+        hash_entry = self.list[newHash]
+        
         
         if self.list[newHash] is not None:
             bucket  = self.list[newHash]
-            
             bucket.insert(key,value)
         else:
+            
             self.list[newHash] = Bucket()
             x = self.list[newHash]
-            x.insert(key,value)
+            
+        
+            # x.insert(key,value)
+            
+        # if self.get_load_factor() > .07:
+        #     self.resize(self.capacity * 2)  
+            
+        # elif self.get_load_factor() <= .02:
+        #     self.resize(self.capacity/2)
+        
+            
+        
             
             
         
@@ -157,21 +173,43 @@ class HashTable:
         """
         # Your code here
         y = [i for i in self.list if i is not None]
+        
         numberOfOn = len(y)
-        return numberOfOn / self.capacity
+        x = self.capacity
+        # print(y)
+        return numberOfOn / x
     
+    def resize(self, new_capacity):
+        """
+        Changes the capacity of the hash table and
+        rehashes all key/value pairs.
+
+        Implement this.
+        """
+        # Your code here
+        x= []
+        for i in self.list:
+            if i is not None:
+                x += i.getKeyandValues()
+        
+        self.capacity = new_capacity
+        self.list = [None] * self.capacity
+        for i in x:
+            self.put(i[0],i[1])
+        
 
 t = HashTable(8)
-t.put('dot','tim')
-t.put('odds','phillip')
-t.put('dods','phillip')
-
+t.put('tod','phillip')
+t.put('tod','spacechime')
+t.put('dot','chimp')
          
     
 # x= []
-# for i in y:
+# for i in t.list:
 #     if i is not None:
 #         x += i.getKeyandValues()
 # print(x)
 
-print(t.get_load_factor())
+
+print(t.get('dot'))
+print(t.get('tod'))
