@@ -12,18 +12,28 @@ class Bucket:
         self.head = None
     
     def insert(self,key,value):
+        
+        x = HashTableEntry(key,value)
+       
         if self.head is None:
-            self.head = HashTableEntry(key,value)
+            self.head = x 
         else:
             curr = self.head
-            while curr.next:
+            
+            while curr.next is not None:
+                if curr.key == key:
+                    curr.value = value
+                    return curr.value
+                
                 curr = curr.next
-            curr.next = HashTableEntry(key,value)
+            curr.next = x
+            
+            
     
     def getKey(self,key):
         curr= self.head
         
-        while curr:
+        while curr is not None:
             if curr.key == key:
                 return curr.value
             curr= curr.next
@@ -49,7 +59,7 @@ class Bucket:
         
     def getValues(self):
         curr = self.head
-        while curr:
+        while curr is not None:
             print(curr.value)
             curr = curr.next
         
@@ -60,7 +70,7 @@ class HashTable:
         assert(capacity >=8),'capacity must be greater than or equal 8'
         
         self.capacity = capacity;
-        self.list = [Bucket() for i in range(capacity)];
+        self.list = [None] * capacity;
     
     def returnList(self):
         return self.list
@@ -83,6 +93,7 @@ class HashTable:
         t = self.hash_index(key)
         bucket = self.list[t]
         return bucket.getKey(key)
+    
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
@@ -91,10 +102,12 @@ class HashTable:
         #return self.fnv1(key) % self.capacity
         
         return self.djb2(key) % self.capacity
+    
     def getBucket(self,key):
         x = self.hash_index(key)
         bucket= self.list[x]
         bucket.getValues()
+        
     def put(self, key, value):
         """
         Store the value with the given key.
@@ -107,8 +120,20 @@ class HashTable:
         # get the hash value
         
         newHash = self.hash_index(key)
-        bucket  = self.list[newHash]
-        bucket.insert(key,value)
+        
+        if self.list[newHash] is not None:
+            bucket  = self.list[newHash]
+            
+            bucket.insert(key,value)
+            return
+        else:
+            self.list[newHash] = Bucket()
+            x = self.list[newHash]
+            x.insert(key,value)
+            
+            
+        
+        
         
         
         # if the value of that index node is none 
@@ -122,8 +147,9 @@ class HashTable:
 
     
 t = HashTable(8)
-t.put('odt','kim')
-t.put('tod','him')
-t.put('dot','jim')
-t.put('sammmy','my phone')
-t.getBucket('sammy')
+t.put('odt','jim')
+t.put('dot','tim')
+t.put('dot','kim')
+t.put('sammyss','rob')
+t.put('crampus','jacom')
+print(t.get('dot'))

@@ -1,0 +1,61 @@
+two main components 
+have a key and a value (record)
+
+implement an associated array 
+
+write a hash function
+it looks at a key evaluetes 
+and spits out an index 
+
+it takes in a key and gives an index number
+
+how to avoid collisoin 
+create a linked list off each index 
+this is called chaining 
+
+
+__________________________________________________________________
+
+Hash tables 
+
+what they solve 
+
+Main hash table operations: GET PUT DELETE
+first encode list 
+then got through the list 
+
+djb2
+FNV-1
+______________________________________________________________________
+To do 
+
+implement a hash table class //done 
+
+Implement a hash table entry class
+
+implement a good hashing function
+
+research DJB2
+research : FNV-1
+Log research
+
+implement the hash_index() that returns an index value for a key
+
+implement the put ,get, and delete methods.. 
+
+
+________________________________________________________________________
+create a bucket node that will will have a head and tail 
+when you insert  into the bucket
+if the bucket head is  empty
+it set the head of the bucket to the a new NOde
+set the tail to the new node
+
+else 
+	set current tail next to the new item
+	set the new item to the tail 
+
+
+
+	
+ 
