@@ -21,10 +21,6 @@ class Bucket:
             curr = self.head
             
             while curr.next is not None:
-                if curr.key == key:
-                    curr.value = value
-                    return curr.value
-                
                 curr = curr.next
             curr.next = x
             
@@ -60,8 +56,17 @@ class Bucket:
     def getValues(self):
         curr = self.head
         while curr is not None:
-            print(curr.value)
+            print(curr.key)
             curr = curr.next
+        
+            
+    def getKeyandValues(self):
+        curr = self.head
+        x= []
+        while curr is not None:
+            x.append([curr.key,curr.value])
+            curr = curr.next
+        return x
         
             
 
@@ -125,7 +130,6 @@ class HashTable:
             bucket  = self.list[newHash]
             
             bucket.insert(key,value)
-            return
         else:
             self.list[newHash] = Bucket()
             x = self.list[newHash]
@@ -145,11 +149,29 @@ class HashTable:
         bucket = self.list[t]
         bucket.delete(key)
 
+    def get_load_factor(self):
+        """
+        Return the load factor for this hash table.
+
+        Implement this.
+        """
+        # Your code here
+        y = [i for i in self.list if i is not None]
+        numberOfOn = len(y)
+        return numberOfOn / self.capacity
     
+
 t = HashTable(8)
-t.put('odt','jim')
 t.put('dot','tim')
-t.put('dot','kim')
-t.put('sammyss','rob')
-t.put('crampus','jacom')
-print(t.get('dot'))
+t.put('odds','phillip')
+t.put('dods','phillip')
+
+         
+    
+# x= []
+# for i in y:
+#     if i is not None:
+#         x += i.getKeyandValues()
+# print(x)
+
+print(t.get_load_factor())
