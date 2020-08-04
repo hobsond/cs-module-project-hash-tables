@@ -7,14 +7,12 @@ class HashTableEntry:
         self.value = value
         self.next = None
     
-    def setNext(self,newNext):
-        self.next = newNext;
-        return self.next
-        
-
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
+class Bucket:
+    def __init__(self):
+        self.head = HashTableEntry(None,None)
 
 class HashTable:
     """
@@ -28,7 +26,7 @@ class HashTable:
         # Your code here
         assert(capacity >=8),'capacity must be greater than or equal 8'
         self.capacity = capacity;
-        self.list = [HashTableEntry(None,None)] * capacity
+        self.list = [Bucket()] * capacity
 
     def get_num_slots(self):
         """
@@ -95,18 +93,17 @@ class HashTable:
         # Your code here
         # get the hash value
         
-        _hash_  = self.hash_index(key)
+        newHash = self.hash_index(key)
+        bucket = self.list[newHash]
         
-        bucket = self.list[_hash_]
-        if bucket.value ==None:
-            bucket.key = key
-            bucket.value  = value
+        if bucket == None:
+            bucket = HashTableEntry(key,value)
         else:
             while bucket.value is not None:
                 bucket = bucket.next
             bucket.value = value
             bucket.key = key
-            
+            return bucket
         # if the value of that index node is none 
         # add the value to the index head
         # else find the next empty node in that chain and insert the value
