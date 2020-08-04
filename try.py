@@ -20,9 +20,21 @@ class Bucket:
                 curr = curr.next
             curr.next = HashTableEntry(key,value)
     
+    def getKey(self,key):
+        curr= self.head
+        
+        while curr:
+            if curr.key == key:
+                return curr.value
+            curr= curr.next
+        return None
     
     def delete(self,key):
         curr = self.head
+        if curr.key == key:
+            self.head = curr.next
+            self.getValues()
+            return
         while curr.key is not key and curr.next is not None:
             if curr.next.key is key:
                 
@@ -48,7 +60,7 @@ class HashTable:
         assert(capacity >=8),'capacity must be greater than or equal 8'
         
         self.capacity = capacity;
-        self.list = [Bucket()] * capacity;
+        self.list = [Bucket() for i in range(capacity)];
     
     def returnList(self):
         return self.list
@@ -67,15 +79,22 @@ class HashTable:
             hash = ((hash<<5) + hash) + ord(x)
         return hash & 0xFFFFFFFF
 
-
+    def get(self,key):
+        t = self.hash_index(key)
+        bucket = self.list[t]
+        return bucket.getKey(key)
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
         #return self.fnv1(key) % self.capacity
+        
         return self.djb2(key) % self.capacity
-    
+    def getBucket(self,key):
+        x = self.hash_index(key)
+        bucket= self.list[x]
+        bucket.getValues()
     def put(self, key, value):
         """
         Store the value with the given key.
@@ -106,4 +125,5 @@ t = HashTable(8)
 t.put('odt','kim')
 t.put('tod','him')
 t.put('dot','jim')
-print(t.delete('tod'))
+t.put('sammmy','my phone')
+t.getBucket('sammy')
