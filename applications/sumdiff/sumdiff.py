@@ -9,7 +9,18 @@ q = (1, 3, 4, 7, 12)
 
 
 def f(x):
-    return x * 4 + 6
+    return (x * 4 + 6) + 6
 
 # Your code here
 
+cache  = {}
+
+def sumdiff(s):
+    for i in range(len(s)):
+        pass
+        
+        
+
+
+print(x)
+print(j)
