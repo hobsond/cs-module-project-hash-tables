@@ -33,7 +33,7 @@ def sortPrint(item):
    j =  histo(item)
    
    item = list(j.items())
-   item.sort(key=lambda e: e[1],reverse=False)
+   item.sort(key=lambda e: e[1],reverse=True)
    for i in item:
        if len(i[1]) > 0:
            print(f"{i[0]} {i[1]} " ) 
