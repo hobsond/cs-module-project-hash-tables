@@ -1,6 +1,7 @@
 # Your code here
 import math
 import  random
+from timeit import default_timer as timer
 def slowfun_too_slow(x, y):
     v = math.pow(x, y)
     v = math.factorial(v)
@@ -24,7 +25,10 @@ def slowfun(x, y):
 
 # Do not modify below this line!
 
+start =timer()
 for i in range(50000):
     x = random.randrange(2, 14)
     y = random.randrange(3, 6)
     print(f'{i}: {x},{y}: {slowfun(x, y)}')
+end=timer()
+print(end)
