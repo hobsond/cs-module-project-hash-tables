@@ -43,10 +43,10 @@ def cipher(s):
     return letter
 
 
-x = cipher(lines)
+# x = cipher(lines)
 
-for i in range(2000):
-    t = cipher(x)
-    x = t 
+# for i in range(2000):
+#     t = cipher(x)
+#     x = t 
 
-print(x)
+print(cipher(lines))

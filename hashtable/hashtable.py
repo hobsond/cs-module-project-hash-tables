@@ -9,70 +9,6 @@ class HashTableEntry:
     
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
-
-
-
-class Bucket:
-    def __init__(self):
-        self.head = None
-    
-    def insert(self,key,value):
-        
-        x = HashTableEntry(key,value)
-       
-        if self.head is None:
-            self.head = x 
-        else:
-            curr = self.head
-            
-            while curr.next is not None:
-                curr = curr.next
-            curr.next = x
-            
-            
-    
-    def getKey(self,key):
-        curr= self.head
-        
-        while curr is not None:
-            if curr.key == key:
-                return curr.value
-            curr= curr.next
-        return None
-    
-    def delete(self,key):
-        curr = self.head
-        if curr.key == key:
-            self.head = curr.next
-            self.getValues()
-            return
-        while curr.key is not key and curr.next is not None:
-            if curr.next.key is key:
-                
-                searchKey = curr.next
-                nextKey = searchKey.next 
-                curr.next = nextKey
-                self.getValues()
-                return "deleted"
-            else:
-                curr=curr.next
-        return "could not Find"
-        
-    def getValues(self):
-        curr = self.head
-        while curr is not None:
-            print(curr.key)
-            curr = curr.next
-        
-            
-    def getKeyandValues(self):
-        curr = self.head
-        x= []
-        while curr is not None:
-            x.append([curr.key,curr.value])
-            curr = curr.next
-        return x
-        
         
 class HashTable:
     """
@@ -86,7 +22,7 @@ class HashTable:
         # Your code here
         assert(capacity >=8),'capacity must be greater than or equal 8'
         self.capacity = capacity;
-        self.list = [Bucket()] * capacity
+        self.list = [None] * capacity
 
     def get_num_slots(self):
         """
@@ -114,9 +50,6 @@ class HashTable:
         numberOfOn = len(y)
         # print(y)
         return numberOfOn / self.capacity
-    
-        
-
 
     def fnv1(self, key):
         """
@@ -165,7 +98,6 @@ class HashTable:
         newHash = self.hash_index(key)
         
         if self.list[newHash] is not None:
-            bucket  = self.list[newHash]
             
             bucket.insert(key,value)
         else:

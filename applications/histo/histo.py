@@ -1,9 +1,9 @@
 # Your code here
-
+cache = {}
 
 def histo(file):
     # open the text
-    cache = {}
+   
     textFile = open(f"{file}.txt",'r')
     lineArray = textFile.read()
     current = ''
